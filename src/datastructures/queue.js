@@ -96,3 +96,20 @@ myPriorityQueue.enqueue('young',4);
 myPriorityQueue.enqueue('normal',8);
 myPriorityQueue.print();
 export {Queue};
+
+///循环队列——击鼓传花: P68 func hotPotato
+function drumAndPass(playerList, num) {
+    const playerQueue = new Queue();
+    playerQueue.enqueue(...playerList);
+
+    while(playerQueue.size()>1) {
+        for (let i=0;i<num;i++) {
+            playerQueue.enqueue(playerQueue.dequeue());//将队列的第一项弹出，并添加到最后一项
+        }
+        const eliminated = playerQueue.dequeue();
+        console.log('Eliminate:',eliminated);
+    }
+    return playerQueue.dequeue();
+}
+
+console.log(drumAndPass(['Tom','Lulu','Eve','Lily','Ben'],7));
