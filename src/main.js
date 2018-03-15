@@ -1,1 +1,1 @@
-import {Queue} from './datastructures/queue.js';
+import {LinkedList} from './datastructures/linkedList.js';

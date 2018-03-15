@@ -34,11 +34,12 @@ const LinkedList = (function() {
                 return null
             }
 
+            let current;
             if (position == 0) { //需要单独考虑移除head节点的情况
                 head = head.next;
             } else {
-                let i = 1;
-                let current = head;
+                let i = 0;
+                current = head;
                 let previous;
                 while(i<position) {//i遍历到要移除的位置的前面一个，即i==position-1时是最后一次循环
                     previous = current;//第一次循环，就是i=1时，current为head,即previous为位置i-1的节点
@@ -51,7 +52,7 @@ const LinkedList = (function() {
             return current.element;
         }
 
-        insertAt(position, element) {
+        insert(position, element) {
             const node = new Node(element);
             if (position <0 || position>length) {
                 return false; //插入失败
@@ -62,7 +63,7 @@ const LinkedList = (function() {
                 head = node;
             } else {
                 let current = head;
-                let i=1;
+                let i=0;
                 let previous;
                 while(i<position) {
                     previous = current;
@@ -82,7 +83,8 @@ const LinkedList = (function() {
             let string = '';
             let current = head;
             while(current) {
-                string += `${current.element}${current.next? '→' : ''}`
+                string += `${current.element}${current.next? '→' : ''}`;
+                current = current.next;
             }
             return string;
         }
@@ -120,3 +122,138 @@ const LinkedList = (function() {
 
     return LinkedList;
 })();
+
+
+
+let myLinkedList = new LinkedList();
+myLinkedList.append(1);
+myLinkedList.append(2);
+console.log(myLinkedList.toString());
+myLinkedList.insert(1,3);
+console.log(myLinkedList.toString());
+myLinkedList.removeAt(2);
+console.log(myLinkedList.toString());
+console.log(myLinkedList.size());
+myLinkedList.insert(0,8);
+console.log(myLinkedList.toString());
+console.log(myLinkedList.remove(1));
+console.log(myLinkedList.toString());
+console.log(myLinkedList.isEmpty());
+console.log(myLinkedList.getHead());
+myLinkedList.append('lalala');
+myLinkedList.insert(2, 'Tom');
+console.log(myLinkedList.toString());
+console.log(myLinkedList.indexOf('Tom'));
+
+/*****双向链表数据结构实现****/
+const DoublyLinkedList = (function() {
+    class Node {
+        constructor() {
+            this.element = this.element;
+            this.prev = null;
+            this.next = null;
+        }
+    }
+
+    let length = 0;
+    let head = null;
+    let tail = null;
+
+    class DoublyLinkedList {
+        insert(position, element) {
+            if (position < 0 || position > length) {
+                return false;
+            }
+            const node = new Node(element);
+            let current;
+            if (position === 0) {
+                if(!head) {//NOTE:该情况遗漏掉！！！
+                    head = node;
+                    tail = node;
+                } else {
+                    current = head;
+                    node.next = current;
+                    current.prev = node;//NOTE:易漏！
+                    head = node;//NOTE：这三句中的后两句交换位置效果是相等的，因为js的obj是引用类型，let a=b,b.x=1,那么a.x也=1
+                }
+               
+            } else if (position === length) {
+                current = tail;
+                node.prev = current;
+                current.next = node;//NOTE:易漏！
+                tail = node;
+            } else {
+                let i;
+                let previous;
+                if (position<=length/2) {//从头部开始迭代
+                    current = head;
+                    i = 0;
+                    while(i<position) {
+                        previous = current;
+                        current = current.next;
+                        i++;
+                    }
+                    previous.next = node;
+                    node.next = current;
+    
+                    node.prev = previous;
+                    current.prev = node;
+                } else {//这时，从尾部开始迭代，迭代次数更少
+                    current = tail;
+                    i = length-1;
+                    while(i>position-1) {
+                        previous = current;
+                        current = current.prev;
+                        i--;
+                    }//注意，最后previous指向position,current指向position-1
+                    current.next = node;
+                    node.next = previous;
+
+                    previous.prev = node;
+                    node.prev = current;
+
+                }
+   
+
+            }
+            length++;
+            return true;
+        }
+
+        removeAt(position) {
+            if (position<0 || position>=length) {
+                return null;
+            }
+            let current;
+            if (position === 0) {
+                current = head;
+                if(head === tail) {
+                    head = null;
+                    tail = null;
+                } else {
+                    head = head.next;
+                    head.prev = null;
+                }
+            } else if (position === length) {
+                current = tail;
+                tail = tail.prev;
+                tail.next = null;
+            } else {
+                let i = 0;
+                let previous;
+                current = head;
+                while(i<position) {
+                    previous = current;
+                    current = current.next;
+                    i++;
+                }
+                previous.next = current.next;
+                current.next.prev = previous;
+            }
+            return current.element;
+        }
+    }
+    return DoublyLinkedList;
+})();
+
+export default LinkedList;
