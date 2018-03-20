@@ -1,1 +1,1 @@
-import {LinkedList} from './datastructures/linkedList.js';
+import Set from './datastructures/set.js';
