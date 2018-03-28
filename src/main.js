@@ -1,1 +1,1 @@
-import Set from './datastructures/set.js';
+import Dictionary from './datastructures/dictionary.js';
