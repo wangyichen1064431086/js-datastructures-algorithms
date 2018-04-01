@@ -1,4 +1,4 @@
-import { LinkedLinst } from './linkedList.js';
+import { LinkedList } from './linkedList.js';
 
 /**字典数据结构的JavaScript实现***/
 function Dictionary() {
@@ -102,6 +102,7 @@ function HashTable() {
     }
 }
 
+// 测试代码：
 const hash = new HashTable();
 hash.put('Gandalf', 'gandalf@email.com');
 hash.put('John', 'johnsnow@email.com');
@@ -120,7 +121,6 @@ hash.print();
 
 /*********使用了分离链接的散列表*********/
 
-//待测试
 function HashTable_SeparationOfLink() {
     let table = [];
 
@@ -132,18 +132,19 @@ function HashTable_SeparationOfLink() {
         return hash % 37;
     }
 
-    let ValuePair = function(key, value) {
+    let ValuePair = function(key, value) { 
         this.key = key;
         this.value = value;
-        this.toString = function() {
+        this.toString = function() {//TO RETHINK: 打印对象的时候，会自动调用其上的toString方法
             return '[' + this.key + '-' + this.value + ']';
         }
     }
     this.put = function(key, value) {
         const position = loseloseHashCode(key);
         
-        if (table[position] == undefined) {
+        if (table[position] === undefined) {
             table[position] = new LinkedList();
+            console.log(table[position].getHead());
         }
         table[position].append(new ValuePair(key, value));//原LinkedList的方法append(element),此处element就是一个类的实例：new ValuePair(key, value)
     }
@@ -189,11 +190,23 @@ function HashTable_SeparationOfLink() {
     this.print = function() {
         for(let i=0,len=table.length;i<len;i++) {
             if(table[i]) {
-                console.log(`${i}:${table[i].toString()}`);
+                console.log(`${i}:${table[i]}`);//这是调用的LinkedList的toString()方法（table[i].toString()可写可不写，因为这是自动调用的），然后具体到每个节点的current.element的打印，自动调用了该element(即一个ValuePair)的toString()方法
             }
         }
     }
 }
+
+// 测试代码：
+const hash1 = new HashTable_SeparationOfLink();
+console.log('hash1:');
+hash1.put('Gandalf', 'gandalf@email.com');
+hash1.put('John', 'john@email.com');
+hash1.put('Tyrion', 'tyrion@email.com');
+hash1.put('Aaron', 'aaron@email.com');
+hash1.put('Donnie', 'donnie@email.com');
+hash1.put('Ana', 'ana@email.com');
+
+hash1.print();//没问题
 
 /**********使用了线性探查的散列表********/
 function HashTable_LinearProbing() {
@@ -217,9 +230,9 @@ function HashTable_LinearProbing() {
     }
 
     this.put = function(key, value) {
-        var position = loseloseHashCode(key);
+        let position = loseloseHashCode(key);
 
-        if(table[position] = undefined) {
+        if(table[position] === undefined) {
             table[position] = new ValuePair(key, value);
         } else {
             let index = position++;
@@ -229,5 +242,69 @@ function HashTable_LinearProbing() {
             table[index] = new ValuePair(key, value);
         }
     }
+
+    this.get = function(key) {
+        let position = loseloseHashCode(key);
+
+        if (table[position] !== undefined) {
+            if (table[position].key === key) {
+                return table[position].value;
+            } else {
+                let index = position++;
+                while (table[index] === undefined || table[index].key !== key) {
+                    index++;
+                }
+                if (table[index].key === key) {//仅仅是验证一下，能走到这里这个条件肯定满足
+                    return table[index].value;
+                }
+            }
+        }
+        return undefined;
+    }
+
+    this.remove = function(key) {
+        let position = loseloseHashCode(key);
+
+        if (table[position] !== undefined) {
+            if (table[position].key === key) {
+                table[position] = undefined;
+                return true;
+            } else {
+                let index = position++;
+                while (table[index] === undefined || table[index].key !== key) {
+                    index++;
+                }
+                if (table[index].key === key) {//仅仅是验证一下，能走到这里这个条件肯定满足
+                    table[index] = undefined;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    this.print = function() {
+        for(let i=0,len=table.length;i<len;i++) {
+            if(table[i]) {
+                console.log(`${i}:${table[i]}`);//这是调用的ValuePair的toString()方法，可以写作table[i].toString()也可以不写toString(),toString()被自动调用了
+            }
+        }
+    }
 }
+
+// 测试代码：
+const hash2 = new HashTable_LinearProbing();
+console.log('hash2:');
+hash2.put('Gandalf', 'gandalf@email.com');
+hash2.put('John', 'john@email.com');
+hash2.put('Tyrion', 'tyrion@email.com');
+hash2.put('Aaron', 'aaron@email.com');
+hash2.put('Donnie', 'donnie@email.com');
+hash2.put('Ana', 'ana@email.com');
+
+hash2.print();//没问题
+
+
+//TODO:后面两个Hash除put和print方法外其他方法待测试
 export default Dictionary;
