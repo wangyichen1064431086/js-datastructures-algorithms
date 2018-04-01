@@ -554,3 +554,7 @@ console.log(myDoublyCircleLinkedList.removeAt(0));
 console.log(myDoublyCircleLinkedList.removeAt(0));
 myDoublyCircleLinkedList.insert(0,1);
 console.log(myDoublyCircleLinkedList.toString());
+
+
+
+export { LinkedList };
