@@ -144,7 +144,7 @@ function HashTable_SeparationOfLink() {
         
         if (table[position] === undefined) {
             table[position] = new LinkedList();
-            console.log(table[position].getHead());
+            //console.log(table[position].getHead());
         }
         table[position].append(new ValuePair(key, value));//原LinkedList的方法append(element),此处element就是一个类的实例：new ValuePair(key, value)
     }
@@ -206,6 +206,9 @@ hash1.put('Aaron', 'aaron@email.com');
 hash1.put('Donnie', 'donnie@email.com');
 hash1.put('Ana', 'ana@email.com');
 
+console.log(hash1.get('Donnie'));
+console.log(hash1.remove('Aaron'));
+console.log(hash1.get('Aaron'));
 hash1.print();//没问题
 
 /**********使用了线性探查的散列表********/
@@ -219,6 +222,14 @@ function HashTable_LinearProbing() {
             hash += key.charCodeAt(i);//得到key中每个字符的ASCII编码
         }
         return hash % 37;
+    }
+
+    let djb2HashCode = function(key) {
+        let hash = 5381;
+        for (let i = 0; i < key.length; i++) {
+            hash = hash * 33 + key.charCodeAt(i);
+        }
+        return hash % 1013;//与一个比散列表大小(这里认为是1000)要大的随机指数求余
     }
 
     let ValuePair = function(key, value) {
@@ -271,7 +282,7 @@ function HashTable_LinearProbing() {
                 return true;
             } else {
                 let index = position++;
-                while (table[index] === undefined || table[index].key !== key) {
+                while (table[index] === undefined || table[index].key !== key) { //(1)
                     index++;
                 }
                 if (table[index].key === key) {//仅仅是验证一下，能走到这里这个条件肯定满足
@@ -302,6 +313,12 @@ hash2.put('Tyrion', 'tyrion@email.com');
 hash2.put('Aaron', 'aaron@email.com');
 hash2.put('Donnie', 'donnie@email.com');
 hash2.put('Ana', 'ana@email.com');
+
+console.log(hash2.get('Donnie'));
+
+console.log(hash2.remove('Aaron'));
+
+//console.log(hash2.get('Aaron'));//TO RETHINK:hash2获取不存在的键，会导致无限循环(上述line277)
 
 hash2.print();//没问题
 
