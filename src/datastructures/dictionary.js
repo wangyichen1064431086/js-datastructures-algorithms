@@ -323,5 +323,33 @@ console.log(hash2.remove('Aaron'));
 hash2.print();//没问题
 
 
-//TODO:后面两个Hash除put和print方法外其他方法待测试
+/***************原生es6的Map*****************/
+const map = new Map();
+map.set('Gandalf', 'gandalf@email.com');
+map.set('John', 'johnsnow@email.com');
+map.set('Tyrion', 'tyrion@email.com');
+
+console.log(map.has('Gandalf'));
+console.log(map.size);
+console.log(map.keys());
+console.log(map.values());
+console.log(map.get('Tyrion'));
+console.log(map.delete('John'));
+console.log(map.get('John'));
+map.clear();
+console.log(map);
+
+/*************ES6的WeekMap************/
+const weakmap = new WeakMap();
+const obj1 = {name: 'Gandalf'},
+      obj2 = {name: 'John'},
+      obj3 = {name: 'Tyrion'};
+
+weakmap.set(obj1, 'gandalf@email.com');
+weakmap.set(obj2,'johnsnow@email.com');
+weakmap.set(obj3, 'tyrion@email.com');
+
+console.log(weakmap.has(obj1));
+console.log(weakmap.get(obj3));
+weakmap.delete(obj2);
 export default Dictionary;
