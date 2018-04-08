@@ -1,1 +1,1 @@
-import Dictionary from './datastructures/dictionary.js';
+import {BinarySearchTree} from './datastructures/tree.js';
