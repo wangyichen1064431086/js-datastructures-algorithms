@@ -7,6 +7,8 @@ function BinarySearchTree() {
     };
     let root = null;
 
+    
+    
     this.insert = function(key) {
         const newNode = new Node(key);
         const insertNode = function(node, newNode) {
@@ -64,6 +66,100 @@ function BinarySearchTree() {
         };
         postOrderTraverseNode(root, callback);
     };
+
+    this.min = function () {
+        const minNode = function(node) {
+            if (node) {
+                while (node.left !== null) {
+                    node = node.left;
+                }
+                return node.key
+            }
+            return null;
+        };
+        return minNode(root);
+    };
+
+    this.max = function() {
+        const maxNode = function(node) {
+            if (node) {
+                while (node.right !== null) {
+                    node = node.right;
+                }
+                return node.key;
+            }
+            return null;
+        };
+        return maxNode(root);
+    }
+
+    this.search = function(key) {
+        const searchNode = function(node, key) {
+            if (node === null) {
+                return false;
+            }
+
+            if (key < node.key) {
+                return searchNode(node.left, key);
+            } else if (key > node.key) {
+                return searchNode(node.right, key);
+            } else {
+                return true;
+            }
+        }
+
+        return searchNode(root, key);
+    };
+
+    this.remove = function(key) {//待再测试，再理解
+        const findMinNode = function(node) { //与方法min中的minNode不同的是，minNode返回node.key,它返回node本身
+            while (node && node.left !== null) {
+                node = node.left;
+            }
+            return node;
+        };
+        const removeNode = function(node, key) {
+            if (node === null) {
+                return null;
+            }
+
+            if (key < node.key) { //这种情况需要更新node.left，然后返回更新了node.left的新的node
+                node.left = removeNode(node.left, key);
+                return node;
+            } else if (key > node.key) { //这种情况需要更新node.right，然后返回更新了node.right的新的node
+                node.right = removeNode(node.right, key);
+                return node;
+            } else { //这些情况需要更新node.key或者其他(包括直接将node变为null, 或更新node.right)，返回的也是更新后的node
+
+                //情况1，被移除的是叶子节点
+                if (node.left === null && node.right === null) {
+                    node = null;
+                    return node;
+                } 
+
+                //情况2,被移除的是只有一个子节点的节点
+                if (node.left === null) { //只有右子节点
+                    node = node.right;
+                    return node;
+                } else if (node.right === null) {//只有左子节点
+                    node = node.left;
+                    return node;
+                }
+
+                //情况3， 被移除的是有两个子节点的节点
+                const aux = findMinNode(node.right);//找到子树中的最小节点
+                node.key = aux.key;//更新node的key
+
+                //node.left不变
+
+                node.right = removeNode(node.right, aux.key);//更新node.right,这里其实是移除了一个以node.right为root的树的叶子节点
+
+                return node;
+            }
+        };
+
+        root = removeNode(root, key);
+    };
 }
 
 //Test for BST
@@ -89,4 +185,11 @@ function printNode(value) {
 tree.inOrderTraverse(printNode);
 tree.preOrderTraverse(printNode);
 tree.postOrderTraverse(printNode);
+console.log('min:', tree.min());
+console.log('max:',tree.max());
+console.log('search 18', tree.search(18));
+console.log('search 4', tree.search(4));
+console.log('search 5', tree.search(5));
+console.log('search 11', tree.search(11));
+
 export {BinarySearchTree};
