@@ -214,6 +214,28 @@ function AvlTree() {
                 return max(heightNode(node.left), heightNode(node.right)) + 1;
             }
         }
+
+        const rotationRR = function(node) {
+            const tmp = node.right;
+            node.right = tmp.left;
+            tmp.left = node;
+            return node;
+        };
+        const rotationLL = function(node) {
+            const tmp = node.left;
+            node.left = tmp.right;
+            tmp.right = node;
+        };
+
+        const rotationLR = function(node) {
+            node.left = rotationRR(node.left);
+            return rotationLL(node);
+        };
+
+        const rotationRL = function(node) {
+            node.right = rotationLL(node.right);
+            return rotationRR(node);
+        };
         const insertNode = function(node, key) {
             if (node === null) {
                 node = new Node(key);
@@ -222,6 +244,7 @@ function AvlTree() {
                 //如果node.left为null,那么就直接插入了这个结点到node.left这里
                 if (node.left !== null) {
                     //TODO: 确认自平衡
+                    
                 }
             } else if (key > node.key) {
                 insertNode(node.right, key);
