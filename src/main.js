@@ -1,1 +1,1 @@
-import {BinarySearchTree} from './datastructures/tree.js';
+import Graph from './datastructures/graph.js';

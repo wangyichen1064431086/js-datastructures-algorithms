@@ -95,7 +95,6 @@ myPriorityQueue.enqueue('old',12);
 myPriorityQueue.enqueue('young',4);
 myPriorityQueue.enqueue('normal',8);
 myPriorityQueue.print();
-export {Queue};
 
 ///循环队列——击鼓传花: P68 func hotPotato
 function drumAndPass(playerList, num) {
@@ -113,3 +112,5 @@ function drumAndPass(playerList, num) {
 }
 
 console.log(drumAndPass(['Tom','Lulu','Eve','Lily','Ben'],7));
+
+export default Queue;
