@@ -98,3 +98,4 @@ console.log(transformDToAny(100,16));
 /// 3. 汉诺塔问题
 // TODO：参见示例代码
 
+export default Stack;
