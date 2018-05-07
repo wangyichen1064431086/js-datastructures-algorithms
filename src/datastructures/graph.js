@@ -180,8 +180,11 @@ function Graph() {
       finishT,
       prevV
     }
-  }
+  };
 
+
+ 
+ 
 }
 
 //Test
@@ -275,4 +278,71 @@ for (let toV of otherVertices) {
    return b[Object.keys(b)[0]] - a[Object.keys(a)[0]];
  });
  console.log(finishTArr);
+
+
+
+ //最短路径算法：Dijkstra算法
+   ///寻找顶点A和其余顶点之间的最短路径：
+   const graphNew = [ //A, B, C, D, E, F顶点的邻接矩阵
+    [0, 2, 4, 0, 0, 0],
+    [0, 0, 1, 4, 2, 0],
+    [0, 0, 0, 0, 3, 0],
+    [0, 0, 0, 0, 0, 2],
+    [0, 0, 0, 3, 0, 2],
+    [0, 0, 0, 0, 0, 0]     
+  ];
+  const INF = Number.MAX_SAFE_INTEGER;//JavaScript最大数，该数是一个十进制16位的数
+  const minDistance = function(dist, visited) {
+    /**
+     * @param dist  TYPE Array[Number],存放A分别到A、B、C、D、E、F的距离
+     * @param visited TYPE Array[Bool],存放是否已经访问过A、B、C、D、E、F
+     * @dest 搜索dist数组的最小值，并返回它在dist中的索引，即可以找到离A最近的那个点的索引
+     */
+    let min = INF;
+    let minIndex = -1;
+
+    for(let v = 0; v < dist.length; v++) {
+      if (visited[v] === false && dist[v] <= min) {
+        min = dist[v];
+        minIndex = v;
+      }
+    }
+    return minIndex;
+  };
+  const dijkstra = function(srcV) {
+    /**
+     * @param srcV: 源顶点的索引
+     */
+    const dist = [];//存放A分别到A、B、C、D、E、F的最短路径距离
+    const visited = [];//存放是否已经访问过A、B、C、D、E、F
+    const length = graphNew.length;
+
+    for (let i = 0; i < length; i++) {
+      dist[i] = INF;//先把最短路径距离都初始化为无限大
+      visited[i] = false;
+    }
+
+    dist[srcV] = 0; //源顶点自己到自己的距离当然为0
+
+    for (let i = 0; i < length-1; i++) {
+      const u = minDistance(dist, visited);//找出未访问顶点中距离源顶点最近的顶点的索引
+      visited[u] = true;
+
+      for (let v = 0; v < length; v++) {
+        if (!visited[v] && graphNew[u][v] != 0 && dist[u] != INF && dist[u] + graphNew[u][v] < dist[v]) {
+          //graphNew[u][v]是顶点u到顶点v的直接路径距离
+          //该条件可翻译为：如果顶点v没有被访问，且u到v的直接路径不为0， 且 源顶点到顶点u的最短路径不为INF, 且 (源顶点到顶点u的最短路径 与 顶点u到顶点v的直接路径) 距离之和 小于 源顶点到顶点v的最短路径距离
+          dist[v] = dist[u] + graphNew[u][v]; //更新源顶点到顶点v的最短路径的值
+        }
+      }
+    }
+    return dist;
+  }
+
+  console.log(dijkstra(0));
+
+
+
+
+
 export default Graph;
