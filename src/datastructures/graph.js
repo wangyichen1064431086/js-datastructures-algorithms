@@ -283,20 +283,22 @@ for (let toV of otherVertices) {
 
  //最短路径算法：Dijkstra算法
    ///寻找顶点A和其余顶点之间的最短路径：
-   const graphNew = [ //A, B, C, D, E, F顶点的邻接矩阵
-    [0, 2, 4, 0, 0, 0],
-    [0, 0, 1, 4, 2, 0],
-    [0, 0, 0, 0, 3, 0],
-    [0, 0, 0, 0, 0, 2],
-    [0, 0, 0, 3, 0, 2],
-    [0, 0, 0, 0, 0, 0]     
+  const graphNew = [ //A, B, C, D, E, F顶点的邻接矩阵
+       //A, B, C, D, E, F
+   /*A*/[0, 2, 4, 0, 0, 0],//A->B距离为2， B->A距离为0
+   /*B*/[0, 0, 1, 4, 2, 0],
+   /*C*/[0, 0, 0, 0, 3, 0],
+   /*D*/[0, 0, 0, 0, 0, 2],
+   /*E*/[0, 0, 0, 3, 0, 2],
+   /*F*/[0, 0, 0, 0, 0, 0]     
   ];
   const INF = Number.MAX_SAFE_INTEGER;//JavaScript最大数，该数是一个十进制16位的数
+
   const minDistance = function(dist, visited) {
     /**
-     * @param dist  TYPE Array[Number],存放A分别到A、B、C、D、E、F的距离
-     * @param visited TYPE Array[Bool],存放是否已经访问过A、B、C、D、E、F
-     * @dest 搜索dist数组的最小值，并返回它在dist中的索引，即可以找到离A最近的那个点的索引
+     * @param dist  TYPE Array[Number],存放A分别到A、B、C、D、E、F的距离。在dijkstra中调用时的初始值为[0, INF, INF, INF, INF, INF]
+     * @param visited TYPE Array[Bool],存放是否已经访问过A、B、C、D、E、F。在dijkstra中调用时的初始值为[false, false, false, false, false, false]
+     * @description 搜索dist数组的最小值，并返回它在dist中的索引，即可以找到离A最近的那个点的索引
      */
     let min = INF;
     let minIndex = -1;
@@ -307,8 +309,9 @@ for (let toV of otherVertices) {
         minIndex = v;
       }
     }
-    return minIndex;
+    return minIndex; //第一次调用得到结果为0
   };
+   
   const dijkstra = function(srcV) {
     /**
      * @param srcV: 源顶点的索引
@@ -325,16 +328,22 @@ for (let toV of otherVertices) {
     dist[srcV] = 0; //源顶点自己到自己的距离当然为0
 
     for (let i = 0; i < length-1; i++) {
-      const u = minDistance(dist, visited);//找出未访问顶点中距离源顶点最近的顶点的索引
-      visited[u] = true;
+      console.log(`dist:${dist.toString()}`);
+      console.log(`visited: ${visited.toString()}`);
+      const u = minDistance(dist, visited);//找出未访问顶点中距离源顶点最近的顶点的索引，第一次调用得到结果为0，即源顶点A自己
+      console.log(`u: ${u}`);
+      visited[u] = true;//下一轮循环再找下一个距离源顶点第二近的顶点时，就排除u了
 
-      for (let v = 0; v < length; v++) {
+      for (let v = 0; v < length; v++) {//该循环可以找出u的所有相邻点v的dist[v]
         if (!visited[v] && graphNew[u][v] != 0 && dist[u] != INF && dist[u] + graphNew[u][v] < dist[v]) {
           //graphNew[u][v]是顶点u到顶点v的直接路径距离
           //该条件可翻译为：如果顶点v没有被访问，且u到v的直接路径不为0， 且 源顶点到顶点u的最短路径不为INF, 且 (源顶点到顶点u的最短路径 与 顶点u到顶点v的直接路径) 距离之和 小于 源顶点到顶点v的最短路径距离
           dist[v] = dist[u] + graphNew[u][v]; //更新源顶点到顶点v的最短路径的值
+          console.log(`v:${v}`);
+          console.log(`dist[v]: ${dist[v]}`);
         }
       }
+     
     }
     return dist;
   }
