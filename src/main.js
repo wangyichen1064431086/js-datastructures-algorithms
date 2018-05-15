@@ -1,1 +1,1 @@
-import Graph from './datastructures/graph.js';
+import './sort/bubbleSort';

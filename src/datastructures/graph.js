@@ -425,4 +425,84 @@ const parent = prim(graphMST);
 
 console.log(parent);//[-1, 0, 1, 5, 1, 4]
 
+///2. Kruskal算法:计算结果不正确
+function kruskal(graph) {
+  const length = graph.length;//图中的顶点数
+  const parent = [];//存储每个顶点的在最小生成树中的父节点的index
+  const cost = deepCopy(graph);//存储graph的副本
+  console.log('cost:');
+  console.log(cost);
+  let ne = 0;//存储最小生成树的边数
+  let u;
+  let v;
+  while(ne < length-1) {
+    for (let i = 0, min = INF; i < length; i++) { //找出所有边中权值最小的边，将该最小权值存储于min
+      for (let j = 0; j < length; j++) {
+        if (cost[i][j] < min) {
+          min = cost[i][j];
+          u = i;
+          v = j;
+        }
+      }
+    }//得到权值最小的边的两个顶点的序号为u,v
+    console.log('u:',u);
+    console.log('v', v);
+    //找出u,v在parent数组中是否已经有了父节点，并返回最顶父节点
+    u = find(u, parent);//找出当前parent数组(MST)中u的根节点的index，将u-v的路径转化为u的根节点到v的根节点的路径
+    v = find(v, parent);
+
+    console.log('u:',u);
+    console.log('v', v);
+
+    if (union(u, v, parent)) {//如果u,v不同那么就将此边保存：通过将parent[v]赋值成u来保存。 同时为MST的边数计数器ne加1.
+      console.log('parent:');
+      console.log(parent);
+      ne++;
+    }
+    cost[u][v] = cost[v][u] = INF;//从cost中移除这一次循环找到的边u->v和v->u
+  }
+  return parent;
+}
+
+function deepCopy(graph) {
+  const copy = [];
+  const len = graph.length;
+  for (let i = 0; i < len; i++) {
+      copy[i] = [];//MARK:一定要这样初始化一维数组，否则二维数组会报错
+    for (let j = 0; j < len; j++) {
+      if(graph[i][j] === 0) {
+        copy[i][j] = INF;
+      } else {
+        copy[i][j] = graph[i][j];
+      }
+     
+    }
+  }
+  return copy;
+}
+function find(i, parent) {
+  while (parent[i]) {
+    i = parent[i];
+  }
+  return i;
+}
+function union(i, j, parent) {
+  if (i != j) {
+    parent[j] = i; //在parent数组中存入 序号为j的顶点 在MST中的父节点的序号i
+    return true;
+  }
+  return false;
+}
+
+
+
+console.log(kruskal(graphMST));
+// Kruskal的运行变量变化
+
+/*
+u | v|find后的u|find后的v | union(u,v,parent) | parent 
+--|--|--------|----------|-------------------|-------
+0 | 1|       0|          1| parent[1] = 0;true|[NULL, 0]            1 | 2|       0|     1 | 2| parent[2]
+
+*/
 export default Graph;
