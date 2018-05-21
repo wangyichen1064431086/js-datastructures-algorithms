@@ -1,1 +1,1 @@
-import './sort/bubbleSort';
+import mergeSort from './sort/mergeSort';
