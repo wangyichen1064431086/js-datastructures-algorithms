@@ -59,7 +59,7 @@ function merge(left, right) {
 
         ir++;
     }
-    console.log('result:'); 
+    console.log('result:'); //
     console.log(result);
     return result;
 }

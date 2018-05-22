@@ -1,1 +1,1 @@
-import mergeSort from './sort/mergeSort';
+import quickSort from './sort/quicksort';
