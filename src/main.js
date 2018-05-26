@@ -1,1 +1,1 @@
-import quickSort from './sort/quicksort';
+import heapSort from './sort/heapSort';
