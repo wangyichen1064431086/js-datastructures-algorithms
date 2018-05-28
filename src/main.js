@@ -1,1 +1,1 @@
-import heapSort from './sort/heapSort';
+import fibonacci from './algorithmMode/recursion';
