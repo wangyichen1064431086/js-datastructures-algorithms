@@ -1,1 +1,1 @@
-import fibonacci from './algorithmMode/recursion';
+import MinCoinChange from './algorithmMode/dynamicProgram';
