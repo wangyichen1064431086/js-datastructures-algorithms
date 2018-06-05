@@ -18,6 +18,7 @@ function MinCoinChange(coins) {
    * @param {Number} amount :找零的总钱数
    */
   this.makeChange = function(amount) {
+    console.log('makeChange');
     if (amount <= 0) {
       return [];
     }
@@ -28,10 +29,11 @@ function MinCoinChange(coins) {
     let min = [];
     let newMin = [];
     for (let i=0, len = coins.length; i < len; i++) {
+      console.log(`Start to try coin value:${coins[i]}`);
       const coin = coins[i];
       const newAmount = amount - coin;
       if (newAmount >= 0 ) { //对剩下的钱再进行找零计算
-        newMin = this.makeChange(newAmount);
+        newMin = this.makeChange(newAmount); // *1.
       }
       if (//如果:
         newAmount >= 0 && //剩下的钱是大于等于0的
@@ -50,7 +52,12 @@ function MinCoinChange(coins) {
 
 // Test:
 
-const myMinCoinChange = new MinCoinChange([1, 5, 10, 25]);
+const myMinCoinChange = new MinCoinChange([1,3,4]);
 
-console.log(myMinCoinChange.makeChange(36));
+console.log(myMinCoinChange.makeChange(6));
 export default MinCoinChange;
+
+//执行说明
+/**
+ * *1.首先,递归了37次.每次都是进入for循环后i=0,coin=1,newAmount每次减少1，最后到地36次递归中newAmount为0，最后再递归一次，得到newMin=[]
+ */
