@@ -1,1 +1,1 @@
-import MinCoinChange from './algorithmMode/dynamicProgram';
+import knapSack from './algorithmMode/dynamicProgram-knapSack';
