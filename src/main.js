@@ -1,1 +1,1 @@
-import knapSack from './algorithmMode/dynamicProgram-knapSack';//啦啦啦
+import knapSack from './algorithmMode/dynamicProgram-lcs';
