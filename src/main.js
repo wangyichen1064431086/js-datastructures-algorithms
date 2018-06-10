@@ -1,1 +1,1 @@
-import knapSack from './algorithmMode/dynamicProgram-lcs';
+import matrixChainOrder from './algorithmMode/dynamicProgram-matrixChain';
