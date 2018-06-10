@@ -17,7 +17,7 @@ function matrixChainOrder(p) {
       const j = i+l-1;
       m[i][j] = Number.MAX_SAFE_INTEGER;
       for (let k = i; k <= j-1; k++) {
-        const q = m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j];
+        const q = m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j]; //这里有问题
         if (q < m[i][j]) {
           m[i][j] = q;
         }
