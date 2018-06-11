@@ -85,7 +85,8 @@ function knapSack(capacity, weights, values, n) {
 knapSack(5, [2, 3, 4], [3, 4, 5],3);
 
 
-/********我自己的方法********/
+/********我自己的方法：********/
+//NOTE:有点问题，这种解决办法是对于同一种物品可以放入多次，但背包问题是同一种东西最多只能放入一次
 function myKnapSack(capacity, weights, values) {
   let maxValue = 0;
   let eachNumObj;

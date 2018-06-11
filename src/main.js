@@ -1,1 +1,1 @@
-import matrixChainOrder from './algorithmMode/dynamicProgram-matrixChain';
+import knapSack from './algorithmMode/greedyAlgorithm-knapSack';
