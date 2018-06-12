@@ -1,1 +1,1 @@
-import knapSack from './algorithmMode/greedyAlgorithm-knapSack';
+import bubbleSort from './sort/bubbleSort';
