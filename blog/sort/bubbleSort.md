@@ -1,0 +1,195 @@
+# 冒泡排序的JavaScript实现
+
+## 1. 普通冒泡
+### 思想
+假设有n个数，按从小到大排序：
+- 进行n-1次外循环，每次外循环会排好当前处理的数中的最大数，即进行第一次外循环排好所有数中的最大数，进行第二次外循环排好所有数中的次大数....直到第n-1次外循环，排好第n-1大的数，也就是倒数第二小的数，那么剩下的那个就是最小的数
+- 在第i+1次外循环中，只需要处理前n-i-1个数，因为后面的i+1个数已经排好。即此时内循环需要比较前n-i-1个数。
+- 在内循环中，依次比较两个相邻项，如果前面一项比后面一项大，则交换他们。最终，内循环处理完这前n-i-1个数后，会把这n-i-1个数中最大的那个数排到第n-i-1的位置上。
+
+### 代码
+
+```js
+function bubbleSort(arr) {
+  const length = arr.length;
+  for (let i = 0; i < length - 1; i++) {
+    let changeOccur = false; //用于标记某次外循环中，是否方式内循环交换事件
+    for (let j = 0; j < length - i -1; j++) {
+      cost++;
+      if (arr[j] > arr[j+1]) {
+        /*
+        const temp = arr[j]; 
+        arr[j] = arr[j+1];
+        arr[j+1] = temp; 
+        */
+        //这三行的交换函数用ES6来写：
+        [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
+        changeOccur = true;
+      }
+    }
+
+    if (!changeOccur) { //如果一次外循环中，没有发生一次内循环交换，那么可以直接结束排序比较
+      break;
+    }
+  }
+}
+```
+
+### 工作过程
+以数组[5, 4, 3, 2, 1,2]为例:
+
+
+## 2. 鸡尾酒排序
+### 思想
+双向的冒泡排序。
+
+### 代码
+
+```js
+function coaktailBubbleSort(arr) {
+  const length = arr.length;
+  let low = 0;
+  let high = length - 1;
+  
+  while(low < high) {
+    let changeOccur = false;
+    for (let j = low; j < high; j++) {
+      if(arr[j] > arr[j+1]) {
+        [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
+        changeOccur = true;
+      }
+    }
+    if(!changeOccur) {
+      break;//如果一次交换也没有发生，那直接就可以跳出，结束排序
+    }
+    high--;
+    changeOccur = false;
+    for (let j = high; j > low; j--) {
+      if (arr[j] < arr[j-1]) {
+        [arr[j-1], arr[j]] = [arr[j], arr[j-1]];
+        changeOccur = true;
+      }
+    }
+    if(!changeOccur) {
+      break;
+    }
+    low++;
+  }
+}
+```
+
+### 工作过程
+以数组[5, 4, 3, 2, 1,2]为例:
+
+
+# 延伸:对比冒泡排序的C语言实现:
+
+## 1. 普通冒泡
+```c
+# include<stdio.h>
+
+void bubble(int *list,int len)
+{
+    int i,j,t,flag=0;
+    for(i=0;i<len-1;i++)
+    {
+        flag=0;//设置标记，当某一轮交换没有交换任何数，那下一轮交换也不必进行了
+        for(j=0;j<len-1-i;j++)
+        {
+            if(list[j]>list[j+1])
+            {
+                t=list[j];
+                list[j]=list[j+1];
+                list[j+1]=t;
+                flag=1;
+            }           
+        }
+        if(flag==0)
+        {
+          break;
+        }
+    }
+
+}
+
+void main()
+{
+    int n,list[10];
+    printf("请输入10个整数：");
+    for(n=0;n<10;n++)
+    {
+        scanf("%d",&list[n]);
+    }
+    printf("\n");
+    bubble(list,10);
+    for(n=0;n<10;n++)
+    {
+        printf("%d\t",list[n]);
+    }
+    printf("\n");
+
+}
+```
+
+## 2. 鸡尾酒冒泡
+```c
+#include<stdio.h>
+
+void CocktailBubble(int *list,int n)
+{
+    int low=0,high=n-1,j,t,flag;
+    while(low<high)
+    {
+        flag=0;//一次进行两趟for循环，第一个for循环排最大值（次大值），第二个for循环排最小值（次小值），只要其中一趟没有交换任何数字就可以结束排序
+        for(j=low;j<high;j++)
+        {
+            if(list[j]>list[j+1])
+            {
+                t=list[j];
+                list[j]=list[j+1];
+                list[j+1]=t;
+                flag=1;
+            }
+        }
+        if(flag==0)
+        {
+            break;
+        }
+        high--;//上述for循环第一次结束，排完最大值；第二次，排完次大值
+        flag = 0;
+        for(j=high;j>low;j--)
+        {
+            if(list[j]<list[j-1])
+            {
+                t=list[j];
+                list[j]=list[j-1];
+                list[j-1]=t;
+                flag = 1;
+            }
+        }
+        if(flag==0)
+        {
+            break;
+        }
+        low++;//上述for循环第一次结束，排完最小值；第二次，排完次小值
+
+    }
+}
+
+void main(){
+    int i,list[10];
+    printf("请输入10个整数:");
+    for(i=0;i<10;i++){
+        scanf("%d",&list[i]);
+    }
+    for(i=0;i<10;i++){
+        printf("%d ",list[i]);
+    }
+    printf("\n");
+    CocktailBubble(list,10);
+    for(i=0;i<10;i++){
+        printf("%d ",list[i]);
+    }
+    printf("\n");
+}
+```
