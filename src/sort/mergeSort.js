@@ -1,11 +1,8 @@
 //归并排序
 
 function mergeSort(arr) {
-    return mergeSortRec(arr);
-}
-function mergeSortRec(arr) {
     const length = arr.length;
-    if (length === 1) {
+    if (length === 1) { //递归算法的停止条件，即为判断数组长度是否为1
         return arr;
     }
     const mid = Math.floor(length / 2);
@@ -16,7 +13,7 @@ function mergeSortRec(arr) {
     console.log(left);
     console.log('right:');
     console.log(right);
-    return merge(mergeSortRec(left), mergeSortRec(right)); //要将原始数组分割直只有一个元素时，才开始归并
+    return merge(mergeSort(left), mergeSort(right)); //要将原始数组分割直至只有一个元素时，才开始归并
 }
 
 function merge(left, right) {

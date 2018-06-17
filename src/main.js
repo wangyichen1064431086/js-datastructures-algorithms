@@ -1,1 +1,1 @@
-import selectionSort from './sort/selectionSort';
+import mergeSort from './sort/mergeSort';
