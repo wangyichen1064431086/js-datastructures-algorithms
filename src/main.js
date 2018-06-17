@@ -1,1 +1,1 @@
-import coaktailBubbleSort from './sort/bubbleSort';
+import selectionSort from './sort/selectionSort';
