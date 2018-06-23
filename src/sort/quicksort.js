@@ -22,7 +22,7 @@ function quick(arr, left, right) {
     if (left < sliceIndex-1) {
       quick(arr, left, sliceIndex-1);
     }
-    if (sliceIndex+1 < right) {
+    if (sliceIndex < right) {
       quick(arr, sliceIndex, right);
     }
   }  
@@ -61,7 +61,7 @@ function partition(arr, left, right) {
   return i;
 }
 
-const myArr = [3, 5, 1, 6, 4, 7, 2];
+const myArr = [3, 5, 2, 6, 4, 7, 2];
 quickSort(myArr);
 console.log(myArr);
 
