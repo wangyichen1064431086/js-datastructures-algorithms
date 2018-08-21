@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>数组.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h3 id="%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95%E6%95%B4%E7%90%86">数组方法整理</h3>
+<table>
+<thead>
+<tr>
+<th>方法分类</th>
+<th>方法名</th>
+<th>语法</th>
+<th>描述</th>
+<th>返回</th>
+<th>是否改变原数组</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>元素的添加和删除</td>
+<td>push</td>
+<td>arr.push(item1[,item2])</td>
+<td>把一个或多个元素添加到数组的末尾</td>
+<td>新数组的长度</td>
+<td>yes</td>
+</tr>
+<tr>
+<td></td>
+<td>unshift</td>
+<td>arr.unshift(item1[,item2])</td>
+<td>把一个或多个元素添加到数组的头部</td>
+<td>新数组的长度</td>
+<td>yes</td>
+</tr>
+<tr>
+<td></td>
+<td>pop</td>
+<td>arr.pop()</td>
+<td>移除数组最后一个元素</td>
+<td>移除的那个最后的元素</td>
+<td>yes</td>
+</tr>
+<tr>
+<td></td>
+<td>shift</td>
+<td>arr.shift()</td>
+<td>移除数组第一个元素</td>
+<td>移除的那个第一个元素</td>
+<td>yes</td>
+</tr>
+<tr>
+<td></td>
+<td>splice</td>
+<td>arr.splice(start[,deleteCount[,item1[,item2[...]]]])</td>
+<td>在任意位置添加或删除元素</td>
+<td>由被删除的元素组成的一个数组。如果只删除了一个元素，则返回只包含一个元素的数组。如果没有删除元素，则返回空数组。</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>数组合并</td>
+<td>concat</td>
+<td>arr1.concat(value1[,value2[..]])</td>
+<td>向一个数组后部添加数组或元素</td>
+<td>新的合并后的数组</td>
+<td>no</td>
+</tr>
+<tr>
+<td>数组切片</td>
+<td>slice</td>
+<td>arr.slice([begin[,end]])</td>
+<td>从开始到结束（不包括结束）选择的数组的一部分浅拷贝到一个新数组对象</td>
+<td>这个拷贝来的新数组对象</td>
+<td>no</td>
+</tr>
+<tr>
+<td>迭代器函数</td>
+<td>every</td>
+<td>arr.every(cb(item[,index[,arr]]){}[,thisArg])</td>
+<td>测试数组的所有项是否都通过了指定函数的测试,有一项结果为false则为false</td>
+<td>true/false</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>some</td>
+<td>arr.some(cb(item[,index[,arr]])[,thisArg])</td>
+<td>测试数组中是否存在通过指定函数的测试的项，有一项结果为true则为true</td>
+<td>true/false</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>foreach</td>
+<td>arr.foreach(cb(item[,index[,arr]]){}[,thisArg])</td>
+<td>对数组的每一项执行一次提供的函数。</td>
+<td>无返回值</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>map</td>
+<td>arr.map(cb(item[,index[,arr]]){}[,thisArg])</td>
+<td>创建由该数组中的每一项都调用指定函数后的返回值组成的新数组</td>
+<td>每一项的返回值组成的新数组</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>filter</td>
+<td>arr.filter(cb(item[,index[,arr]]){}[,thisArg])</td>
+<td>创建由该数组中的每一项都调用指定函数后返回true的项组成的新数组</td>
+<td>返回true的项组成的新数组</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>reduce</td>
+<td>arr.reduce(cb(accumulator,currentValue[,currentIndex[,arr]]){}[,initialValue])</td>
+<td>函数参数不断返回将被叠加到累加器上的值，reduce方法停止后返回这个累加器的最终值</td>
+<td>累加器的最终值</td>
+<td>no</td>
+</tr>
+<tr>
+<td>排序</td>
+<td>reverse</td>
+<td>arr.reverse()</td>
+<td>就地颠倒数组中元素的顺序</td>
+<td>颠倒后的数组</td>
+<td>yes</td>
+</tr>
+<tr>
+<td></td>
+<td>sort</td>
+<td>arr.sort([compareFunc])</td>
+<td>就地对数组中的元素进行排序，默认是根据字符串unicode升序排列</td>
+<td>排序后的数组</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>搜索</td>
+<td>indexOf</td>
+<td>arr.indexOf(searchItem[,fromIndex=0])</td>
+<td>在数组中查找给定元素的第一个索引</td>
+<td>首个被找到的给定元素的索引，如果没找到则返回-1</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>lastIndexOf</td>
+<td>arr.lastIndexOf(searchItem[,fromIndex=arr.length-1])</td>
+<td>在数组中查找给定元素的最后一个索引</td>
+<td>从后向前首个被找到的给定元素的索引，如果没找到则返回-1</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>(es7)includes</td>
+<td>arr.includes(searchItem)</td>
+<td>判断数组中是否存在某个元素</td>
+<td>true/false</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>(es6)find</td>
+<td>arr.find(cb(item[,index[,arr]]){}[,thisArg])</td>
+<td>返回数组中满足指定函数的第一个元素</td>
+<td>数组中满足指定函数的第一个元素/undefined</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>(es6)findIndex</td>
+<td>arr.findIndex(cb(item[,index[,arr]]){}[,thisArg])</td>
+<td>返回数组中满足指定函数的第一个元素的索引</td>
+<td>满足指定函数的第一个元素的索引/-1</td>
+<td>no</td>
+</tr>
+<tr>
+<td>输出为字符串</td>
+<td>toString</td>
+<td>arr.toString()</td>
+<td>得到由数组元素组成的字符串，由逗号分隔。相对于arr.join(',')</td>
+<td>由数组元素组成的、逗号分隔的字符串</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>join</td>
+<td>arr.join(separator)</td>
+<td>将数组通过指定分隔符连接成字符串</td>
+<td>由数组元素组成、指定分隔符连接的字符串</td>
+<td>no</td>
+</tr>
+<tr>
+<td>元素的填充</td>
+<td>(es6)copyWithin</td>
+<td>arr.copyWithin(target[,start[,end]])</td>
+<td>浅复制数组的一部分到同一数组中的另一个位置，并返回它，而不修改其大小。</td>
+<td>改变后的数组</td>
+<td>yes</td>
+</tr>
+<tr>
+<td></td>
+<td>(es6)fill</td>
+<td>arr.fill(value[,start[,end]])</td>
+<td>用一个固定值填充一个数组中从起始索引到终止索引内的全部元素</td>
+<td>修改后的数组</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>es6迭代器</td>
+<td>(es6)entries</td>
+<td>arr.entries() <br>entries.next().value<br>entries.next().done</td>
+<td>返回一个新的数组迭代器，在迭代器上调用next()可得到{value:[index,item],done:Bool}</td>
+<td>包含每项索引的键值对信息的数组迭代器</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>(es6)keys</td>
+<td>arr.keys()</td>
+<td>返回一个新的数组迭代器，在迭代器上调用next()可得到{value:index,done:Bool}</td>
+<td>包含每项索引信息的数组迭代器</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>(es6)values</td>
+<td>arr.values()</td>
+<td>返回一个新的数组迭代器，在迭代器上调用next()可得到{value:item,done:Bool}</td>
+<td>包含每项值信息的数组迭代器</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Array类型上(非实例上)的方法</td>
+<td>(es6)from</td>
+<td>Array.from(arrLike[,mapCb[,thisArg]])</td>
+<td>从一个类似数组或可迭代对象中创建一个新的数组实例。</td>
+<td>新的数组实例</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>isArray</td>
+<td>Array.isArray(obj)</td>
+<td>检测某个对象是否是Array，如果对象是Array则返回true,否则返回false</td>
+<td>true/false</td>
+<td>no</td>
+</tr>
+<tr>
+<td></td>
+<td>(es6)of</td>
+<td>Array.of(item1[,item2[,item3[,..]]])</td>
+<td>创建一个具有可变数量项的新数组实例</td>
+<td>新数组实例</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</h3>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array</a></p>
+<p>《JavaScript数据结构与算法》2.7</p>
+
+</body>
+</html>
