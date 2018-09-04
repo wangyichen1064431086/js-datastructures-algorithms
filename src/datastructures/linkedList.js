@@ -16,11 +16,9 @@
  *思考闭包的内存泄漏问题
  */
 function LinkedList () {
-    class Node { //这个Node倒是可以写成es6的class也可以写成构造函数形式
-        constructor(element) {
-            this.element = element;
-            this.next = null;
-        }
+    const Node = function() { //这个Node倒是可以写成es6的class也可以写成构造函数形式
+        this.element = element;
+        this.next = null;
     }
 
     let length = 0;
@@ -49,12 +47,11 @@ function LinkedList () {
             return null
         }
 
-        let current;
+        let current= head;
         if (position == 0) { //需要单独考虑移除head节点的情况
             head = head.next;
         } else {
             let i = 0;
-            current = head;
             let previous;
             while(i<position) {//i遍历到要移除的位置的前面一个，即i==position-1时是最后一次循环
                 previous = current;//第一次循环，就是i=1时，current为head,即previous为位置i-1的节点
